@@ -1,0 +1,17 @@
+# Virtual environment
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+
+# IDE settings
+.vscode/
+
+# Others
+PROJECT_CHARTER.txt
+main.py
