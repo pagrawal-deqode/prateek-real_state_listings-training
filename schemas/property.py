@@ -10,6 +10,7 @@ class Address(BaseModel):
 
 class PropertyCreate(BaseModel):
     model_config = ConfigDict(extra="forbid")
+
     title: str = Field(min_length=5, max_length=100)
     description: str | None = None
     price: float = Field(gt=0)
@@ -20,6 +21,18 @@ class PropertyCreate(BaseModel):
     area_sqft: float = Field(gt=0)
     is_available: bool = True
     address: Address
+
+class PropertyUpdate(BaseModel):
+    title: str | None = Field(default=None, min_length=5, max_length=100)
+    description: str | None = None
+    price: float | None = Field(default=None, gt=0)
+    property_type: Literal["Apartment", "House", "Villa", "Plot"] | None = None
+    listing_type: Literal["Sale", "Rent"] | None = None
+    bedrooms: int | None = Field(default=None, ge=0)
+    bathrooms: int | None = Field(default=None, ge=0)
+    area_sqft: float | None = Field(default=None, gt=0)
+    is_available: bool | None = None
+    address: Address | None = None
 
 class PropertyResponse(PropertyCreate):
     id: int
