@@ -1,21 +1,18 @@
-from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
-from sqlalchemy import text
+from fastapi import FastAPI
 
-from app.database.session import get_db
+from app.modules.properties.router import router as properties_router
 
-app = FastAPI(title="Real Estate Listings API")
+app = FastAPI(
+    title="Real Estate Listings API",
+    description="API for managing real estate property listings",
+    version="1.0.0"
+)
 
-@app.get("/db-check")
-def db_check(db: Session = Depends(get_db)):
+app.include_router(properties_router)
 
-    db_name = db.execute(
-        text("SELECT current_database()")
-    ).scalar_one()
-    
+@app.get("/health")
+def health():
     return {
         "status": True,
         "message" : "Welcome to Real Estate Listings API",
-        "database" : db_name
     }
-
